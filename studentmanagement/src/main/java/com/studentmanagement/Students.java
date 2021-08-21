@@ -21,6 +21,6 @@ public class Students {
     private String lastname;
 
     @Column(name = "age")
-    private 
+    
     
 }
