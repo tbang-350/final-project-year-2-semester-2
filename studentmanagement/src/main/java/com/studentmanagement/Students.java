@@ -9,11 +9,8 @@ public class Students {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @Column(name = "firstname")
-    private String firstname;
-
-    @Column(name = "lastname")
-    private String lastname;
+    @Column(name= "fullname")
+    private String fullname;
 
     @Column(name= "gender")
     private String gender;
@@ -26,17 +23,17 @@ public class Students {
 
 
     public Students() {
-        
+
     }
 
 
-    public Students(String firstname, String lastname, String gender, String course, boolean paid) {
-        this.firstname = firstname;
-        this.lastname = lastname;
+    public Students(String fullname, String gender, String course, boolean paid) {
+        this.fullname = fullname;
         this.gender = gender;
         this.course = course;
         this.paid = paid;
     }
+
 
     public long getId() {
         return this.id;
@@ -46,20 +43,12 @@ public class Students {
         this.id = id;
     }
 
-    public String getFirstname() {
-        return this.firstname;
+    public String getFullname() {
+        return this.fullname;
     }
 
-    public void setFirstname(String firstname) {
-        this.firstname = firstname;
-    }
-
-    public String getLastname() {
-        return this.lastname;
-    }
-
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
+    public void setFullname(String fullname) {
+        this.fullname = fullname;
     }
 
     public String getGender() {
@@ -89,13 +78,13 @@ public class Students {
     public void setPaid(boolean paid) {
         this.paid = paid;
     }
+    
 
     @Override
     public String toString() {
         return "{" +
             " id='" + getId() + "'" +
-            ", firstname='" + getFirstname() + "'" +
-            ", lastname='" + getLastname() + "'" +
+            ", fullname='" + getFullname() + "'" +
             ", gender='" + getGender() + "'" +
             ", course='" + getCourse() + "'" +
             ", paid='" + isPaid() + "'" +

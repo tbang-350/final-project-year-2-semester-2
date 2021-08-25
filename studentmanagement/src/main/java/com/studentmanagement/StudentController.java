@@ -27,21 +27,20 @@ public class StudentController {
     StudentRepository studentRepository;
 
     @GetMapping("/students")
-    public ResponseEntity<List<Students>> getAllStudents (@RequestParam(required = false) String firstname){
-        try{
+    public ResponseEntity<List<Students>> getAllStudents(@RequestParam(required = false) String course){
+        try {
             List<Students> students = new ArrayList<Students>();
 
-            if (firstname.isEmpty())
+            if (course == null)
                 studentRepository.findAll().forEach(students::add);
             else
-                StudentRepository.findByFirstNameContaining(firstname).forEach(students::add);
+                studentRepository.findByCourseContaining(course).forEach(students::add);
 
-            if (students.isEmpty()) {
+            if(students.isEmpty()){
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }
-
             return new ResponseEntity<>(students, HttpStatus.OK);
-        }catch (Exception e){
+        }catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -61,7 +60,7 @@ public class StudentController {
     @PostMapping("/students")
     public ResponseEntity <Students> createStudent(@RequestBody Students students){
         try{
-            Students _students = studentRepository.save(new Students(students.getFirstname(), students.getLastname(), students.getGender(), students.getCourse(), false));
+            Students _students = studentRepository.save(new Students(students.getFullname(), students.getGender(), students.getCourse(), false));
             return new ResponseEntity<>(_students, HttpStatus.CREATED);
         }catch(Exception e){
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -74,8 +73,7 @@ public class StudentController {
 
         if(studentData.isPresent()){
             Students _students = studentData.get();
-            _students.setFirstname(students.getFirstname());
-            _students.setLastname(students.getLastname());
+            _students.setFullname(students.getFullname());
             _students.setGender(students.getGender());
             _students.setPaid(students.isPaid());
             return new ResponseEntity<>(studentRepository.save(_students), HttpStatus.OK);
@@ -84,27 +82,31 @@ public class StudentController {
         }
     }
 
-    @DeleteMapping("/student/{id}")
-    public ResponseEntity <HttpStatus> deleteStudent(@PathVariable("id") long id){
-        try{
+    @DeleteMapping("/students/{id}")
+    public ResponseEntity <HttpStatus> deleteTutorial(@PathVariable("id") long id){
+        try {
             studentRepository.deleteById(id);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }catch(Exception e){
+        }catch (Exception e){
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+
 
     @DeleteMapping("/students")
-    public ResponseEntity <HttpStatus> deleteAllStudents(){
-        try{
+    public ResponseEntity<HttpStatus> deleteAllStudents(){
+        try {
             studentRepository.deleteAll();
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }catch(Exception e){
+        }catch (Exception e){
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-    @GetMapping("/tutorials/published")
+    
+
+    @GetMapping("/students/paid")
     public ResponseEntity<List<Students>> findByPaid(){
         try {
             List<Students> students = studentRepository.findByPaid(true);
