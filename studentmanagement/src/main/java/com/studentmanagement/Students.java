@@ -18,6 +18,12 @@ public class Students {
     @Column(name = "course")
     private String course;
 
+    @Column(name = "semester")
+    private String semester;
+
+    @Column(name = "year")
+    private String year;
+
     @Column(name = "paid")
     private boolean paid;
 
@@ -27,13 +33,15 @@ public class Students {
     }
 
 
-    public Students(String fullname, String gender, String course, boolean paid) {
+    public Students(String fullname, String gender, String course, String semester, String year, boolean paid) {
         this.fullname = fullname;
         this.gender = gender;
         this.course = course;
+        this.semester = semester;
+        this.year = year;
         this.paid = paid;
     }
-
+   
 
     public long getId() {
         return this.id;
@@ -67,6 +75,22 @@ public class Students {
         this.course = course;
     }
 
+    public String getSemester() {
+        return this.semester;
+    }
+
+    public void setSemester(String semester) {
+        this.semester = semester;
+    }
+
+    public String getYear() {
+        return this.year;
+    }
+
+    public void setYear(String year) {
+        this.year = year;
+    }
+
     public boolean isPaid() {
         return this.paid;
     }
@@ -87,10 +111,11 @@ public class Students {
             ", fullname='" + getFullname() + "'" +
             ", gender='" + getGender() + "'" +
             ", course='" + getCourse() + "'" +
+            ", semester='" + getSemester() + "'" +
+            ", year='" + getYear() + "'" +
             ", paid='" + isPaid() + "'" +
             "}";
     }
-    
 
 
 } 

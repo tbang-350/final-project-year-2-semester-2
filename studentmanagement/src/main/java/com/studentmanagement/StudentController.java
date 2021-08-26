@@ -60,7 +60,7 @@ public class StudentController {
     @PostMapping("/students")
     public ResponseEntity <Students> createStudent(@RequestBody Students students){
         try{
-            Students _students = studentRepository.save(new Students(students.getFullname(), students.getGender(), students.getCourse(), false));
+            Students _students = studentRepository.save(new Students(students.getFullname(), students.getGender(), students.getCourse(), students.getSemester(), students.getYear(), false));
             return new ResponseEntity<>(_students, HttpStatus.CREATED);
         }catch(Exception e){
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -75,6 +75,9 @@ public class StudentController {
             Students _students = studentData.get();
             _students.setFullname(students.getFullname());
             _students.setGender(students.getGender());
+            _students.setCourse(students.getCourse());
+            _students.setSemester(students.getSemester());
+            _students.setYear(students.getYear());
             _students.setPaid(students.isPaid());
             return new ResponseEntity<>(studentRepository.save(_students), HttpStatus.OK);
         }else{
